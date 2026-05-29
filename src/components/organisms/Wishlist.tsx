@@ -26,9 +26,9 @@ const Wishlist = () => {
       <SheetTrigger asChild>
         <button className="relative cursor-pointer">
           <Heart className="w-6 h-6" />
-          <span className="absolute -top-2 -right-2 flex items-center justify-center w-5 h-5 rounded-full bg-black text-white text-xs">
+          {/* <span className="absolute -top-2 -right-2 flex items-center justify-center w-5 h-5 rounded-full bg-black text-white text-xs">
             {products.length}
-          </span>
+          </span> */}
         </button>
       </SheetTrigger>
 

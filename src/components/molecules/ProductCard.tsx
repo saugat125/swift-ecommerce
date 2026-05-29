@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addToWishlist, removeFromWishlist } from '@/app/wishlistSlice';
 import type { RootState } from '@/app/store';
 import { toast } from 'sonner';
+import { addToCart } from '@/app/cartSlice';
 
 const ProductCard = ({ product }: { product: Product }) => {
   const dispatch = useDispatch();
@@ -71,7 +72,14 @@ const ProductCard = ({ product }: { product: Product }) => {
             </div>
 
             <div className="mt-5">
-              <Button className="text-xs bg-[#00bd32] cursor-pointer hover:scale-102 transition-transform duration-200">
+              <Button
+                className="text-xs bg-[#00bd32] cursor-pointer hover:scale-102 transition-transform duration-200"
+                onClick={(e) => {
+                  e.preventDefault();
+                  dispatch(addToCart({ ...product, quantity: 1 }));
+                  toast.success('Added to cart');
+                }}
+              >
                 Add to cart
               </Button>
             </div>

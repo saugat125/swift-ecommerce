@@ -3,11 +3,15 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const productApi = createApi({
   reducerPath: 'productApi',
-  baseQuery: fetchBaseQuery({ baseUrl: 'https://fakestoreapi.com' }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: import.meta.env.VITE_PRODUCT_API,
+  }),
+
   endpoints: (builder) => ({
     getProducts: builder.query<Product[], void>({
       query: () => '/products',
     }),
+
     getProductsById: builder.query<Product, number>({
       query: (id) => `/products/${id}`,
     }),

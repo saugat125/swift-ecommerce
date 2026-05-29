@@ -10,8 +10,11 @@ import {
   SheetTrigger,
 } from '@/components/atoms/sheet';
 
-import { Heart } from 'lucide-react';
+import { Heart, Trash2 } from 'lucide-react';
 import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'sonner';
+import { Button } from '../atoms/button';
+import { addToCart } from '@/app/cartSlice';
 
 const Wishlist = () => {
   const dispatch = useDispatch();
@@ -55,9 +58,7 @@ const Wishlist = () => {
 
               <div className="flex-1 flex flex-col justify-between">
                 <div>
-                  <h3 className="font-semibold text-base line-clamp-1">
-                    {product.title}
-                  </h3>
+                  <h3 className="font-semibold text-base">{product.title}</h3>
 
                   <p className="text-sm text-muted-foreground mt-1 capitalize">
                     {product.category}
@@ -66,12 +67,25 @@ const Wishlist = () => {
 
                 <div className="flex items-center justify-between mt-3">
                   <span className="text-lg font-bold">${product.price}</span>
+                  <Button
+                    variant="ghost"
+                    className="text-sm font-semibold hover:bg-white cursor-pointer text-gray-800 hover:text-black transition duration-200"
+                    onClick={() => {
+                      dispatch(addToCart({ ...product, quantity: 1 }));
+                      toast.success('Added to cart');
+                    }}
+                  >
+                    Add to cart
+                  </Button>
 
                   <button
-                    onClick={() => dispatch(removeFromWishlist(product.id))}
-                    className="text-sm text-red-500 hover:text-red-600 transition cursor-pointer"
+                    onClick={() => {
+                      dispatch(removeFromWishlist(product.id));
+                      toast.info('Removed from wishlist');
+                    }}
+                    className="text-sm text-red-500 transition cursor-pointer"
                   >
-                    Remove
+                    <Trash2 className="w-5 h-5 mr-1" />
                   </button>
                 </div>
               </div>

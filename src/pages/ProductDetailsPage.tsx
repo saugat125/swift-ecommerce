@@ -1,0 +1,44 @@
+import ProductDetailsSkeleton from '@/components/molecules/ProductDetailsSkeleton';
+import ProductDetailsSection from '@/components/organisms/ProductDetailsSection';
+import { useGetProductsByIdQuery } from '@/services/productApi';
+import { useParams } from 'react-router-dom';
+
+const ProductDetailsPage = () => {
+  const { productId } = useParams();
+  const id = Number(productId);
+
+  const { data: product, error, isLoading } = useGetProductsByIdQuery(id);
+
+  if (isLoading) {
+    return (
+      <div className="max-w-5xl mx-auto px-4 py-10">
+        <ProductDetailsSkeleton />
+      </div>
+    );
+  }
+  if (!productId || isNaN(id)) {
+    return (
+      <div className="max-w-5xl mx-auto px-4 py-10 text-red-600">
+        Invalid product ID
+      </div>
+    );
+  }
+  if (error) {
+    return (
+      <div className="text-red-600 ml-10 lg:ml-16">
+        Failed to load product details.
+      </div>
+    );
+  }
+  if (!product) {
+    return (
+      <div className="max-w-5xl mx-auto px-4 py-10 text-red-600">
+        Product not found.
+      </div>
+    );
+  }
+
+  return <ProductDetailsSection product={product} />;
+};
+
+export default ProductDetailsPage;

@@ -1,9 +1,15 @@
+import { Minus, Plus, ShoppingCart, Trash2 } from 'lucide-react';
+import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'sonner';
+import type { RootState } from '@/app/store';
+import { Link } from 'react-router-dom';
+import { useState } from 'react';
 import {
   decrementQuantityCart,
   incrementQuantityCart,
   removeFromCart,
 } from '@/app/cartSlice';
-import type { RootState } from '@/app/store';
+
 import {
   Sheet,
   SheetContent,
@@ -13,10 +19,6 @@ import {
   SheetTrigger,
 } from '@/components/atoms/sheet';
 
-import { Minus, Plus, ShoppingCart, Trash2 } from 'lucide-react';
-import { useDispatch, useSelector } from 'react-redux';
-import { toast } from 'sonner';
-
 const Cart = () => {
   const dispatch = useDispatch();
   const cartItems = useSelector((state: RootState) => state.cart.items);
@@ -25,12 +27,16 @@ const Cart = () => {
     (total, item) => total + item.price * item.quantity,
     0,
   );
+  const [open, setOpen] = useState(false);
 
   return (
-    <Sheet>
+    <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
         <button className="relative cursor-pointer">
           <ShoppingCart className="w-6 h-6" />
+          <span className="absolute -top-2 -right-2 flex items-center justify-center w-4 h-4 rounded-full bg-black text-white text-xs">
+            {cartItems.length}
+          </span>
         </button>
       </SheetTrigger>
 
@@ -53,22 +59,29 @@ const Cart = () => {
               key={item.id}
               className="flex gap-4 border rounded-2xl p-3 mb-4"
             >
-              <img
-                src={item.image}
-                alt={item.title}
-                className="w-24 h-24 rounded-xl object-contain"
-              />
+              <Link to={`/products/${item.id}`} onClick={() => setOpen(false)}>
+                <img
+                  src={item.image}
+                  alt={item.title}
+                  className="w-24 h-24 rounded-xl object-contain"
+                />
+              </Link>
 
               <div className="flex-1 flex flex-col justify-between">
                 <div>
-                  <h3 className="font-semibold text-base">{item.title}</h3>
+                  <Link
+                    to={`/products/${item.id}`}
+                    onClick={() => setOpen(false)}
+                  >
+                    <h3 className="font-semibold text-base">{item.title}</h3>
+                  </Link>
 
                   <p className="text-sm text-muted-foreground mt-1">
                     {item.category}
                   </p>
                 </div>
 
-                <div className="flex items-center justify-between mt-4">
+                <div className="flex items-center justify-between mt-4 gap-2 md:gap-0">
                   <div className="flex gap-4 items-center">
                     <p className="text-lg font-bold">{`$${item.price.toFixed(2)}`}</p>
 

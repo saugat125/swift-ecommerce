@@ -1,6 +1,11 @@
 import ProductDetailsSkeleton from '@/components/molecules/ProductDetailsSkeleton';
 import ProductDetailsSection from '@/components/organisms/ProductDetailsSection';
-import { useGetProductsByIdQuery } from '@/services/productApi';
+import RelatedProductsSection from '@/components/molecules/RelatedProductsSection';
+import {
+  useGetProductsByIdQuery,
+  useGetProductsQuery,
+} from '@/services/productApi';
+import { useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 
 const ProductDetailsPage = () => {
@@ -8,6 +13,18 @@ const ProductDetailsPage = () => {
   const id = Number(productId);
 
   const { data: product, error, isLoading } = useGetProductsByIdQuery(id);
+  const { data: products = [], isLoading: isRelatedProductsLoading } =
+    useGetProductsQuery();
+
+  const relatedProducts = useMemo(() => {
+    if (!product) {
+      return [];
+    }
+
+    return products.filter(
+      (item) => item.category === product.category && item.id !== product.id,
+    );
+  }, [product, products]);
 
   if (isLoading) {
     return (
@@ -38,7 +55,15 @@ const ProductDetailsPage = () => {
     );
   }
 
-  return <ProductDetailsSection product={product} />;
+  return (
+    <>
+      <ProductDetailsSection product={product} />
+      <RelatedProductsSection
+        products={relatedProducts}
+        isLoading={isRelatedProductsLoading}
+      />
+    </>
+  );
 };
 
 export default ProductDetailsPage;

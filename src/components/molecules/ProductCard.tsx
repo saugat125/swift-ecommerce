@@ -10,6 +10,7 @@ import { Badge } from '../atoms/badge';
 import { Button } from '../atoms/button';
 import { Card, CardContent, CardHeader } from '../atoms/card';
 import RatingStars from '../atoms/rating';
+import CartQuantityCounter from '../atoms/CartQuantityCounter';
 
 const ProductCard = ({ product }: { product: Product }) => {
   const dispatch = useDispatch();
@@ -64,15 +65,16 @@ const ProductCard = ({ product }: { product: Product }) => {
           <CardContent className="space-y-3 mb-4">
             <h2 className="text-lg font-semibold min-h-14">{product.title}</h2>
 
-            <p className="text-xl font-bold">${product.price}</p>
+            <p className="text-xl font-bold">${product.price.toFixed(2)}</p>
 
             <div className="flex items-center gap-2 text-xs">
               <RatingStars rating={product.rating.rate} />
               <p className="text-gray-600">{`(${product.rating.count})`}</p>
             </div>
 
-            <div className="mt-5">
+            <div className="mt-5 flex gap-4">
               <AddToCartButton product={product} />
+              <CartQuantityCounter productId={product.id} />
             </div>
           </CardContent>
         </Card>

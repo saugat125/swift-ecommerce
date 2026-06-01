@@ -1,14 +1,10 @@
-import { Minus, Plus, ShoppingCart, Trash2 } from 'lucide-react';
+import { ShoppingCart, Trash2 } from 'lucide-react';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'sonner';
 import type { RootState } from '@/app/store';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
-import {
-  decrementQuantityCart,
-  incrementQuantityCart,
-  removeFromCart,
-} from '@/app/cartSlice';
+import { removeFromCart } from '@/app/cartSlice';
 
 import {
   Sheet,
@@ -18,6 +14,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@/components/atoms/sheet';
+import CartQuantityCounter from '../atoms/CartQuantityCounter';
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -86,23 +83,7 @@ const Cart = () => {
                     <p className="text-lg font-bold">{`$${item.price.toFixed(2)}`}</p>
 
                     <div className="flex items-center gap-3">
-                      <button
-                        onClick={() => dispatch(decrementQuantityCart(item.id))}
-                        className="w-8 h-8 rounded-md border flex items-center justify-center hover:bg-gray-100 transition cursor-pointer"
-                      >
-                        <Minus className="w-4 h-4" />
-                      </button>
-
-                      <span className="text-sm font-medium">
-                        {item.quantity}
-                      </span>
-
-                      <button
-                        onClick={() => dispatch(incrementQuantityCart(item.id))}
-                        className="w-8 h-8 rounded-md border flex items-center justify-center hover:bg-gray-100 transition cursor-pointer"
-                      >
-                        <Plus className="w-4 h-4" />
-                      </button>
+                      <CartQuantityCounter productId={item.id} />
                     </div>
                   </div>
 

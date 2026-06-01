@@ -3,8 +3,6 @@ import { removeFromWishlist } from '@/app/wishlistSlice';
 import { Heart, Trash2 } from 'lucide-react';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'sonner';
-import { Button } from '../atoms/button';
-import { addToCart } from '@/app/cartSlice';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import {

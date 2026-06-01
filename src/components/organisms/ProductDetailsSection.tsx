@@ -1,5 +1,6 @@
 import type { Product } from '@/types/product';
 import AddToCartButton from '../atoms/AddToCartButton';
+import CartQuantityCounter from '../atoms/CartQuantityCounter';
 import RatingStars from '@/components/atoms/rating';
 import { Badge } from '@/components/atoms/badge';
 import { Card } from '@/components/atoms/card';
@@ -30,10 +31,13 @@ const ProductDetailsSection = ({ product }: { product: Product }) => {
             {product?.description}
           </p>
 
-          <p className="text-2xl md:text-3xl font-bold">${product?.price}</p>
+          <p className="text-2xl md:text-3xl font-bold">
+            ${product?.price.toFixed(2)}
+          </p>
 
-          <div>
+          <div className="flex gap-4">
             <AddToCartButton product={product} />
+            <CartQuantityCounter productId={product.id} />
           </div>
         </div>
       </Card>

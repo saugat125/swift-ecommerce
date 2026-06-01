@@ -1,15 +1,15 @@
 import { Link } from 'react-router-dom';
-import { Badge } from '../atoms/badge';
-import { Button } from '../atoms/button';
-import { Card, CardContent, CardHeader } from '../atoms/card';
-import RatingStars from '../atoms/rating';
 import type { Product } from '@/types/product';
 import { Heart } from 'lucide-react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToWishlist, removeFromWishlist } from '@/app/wishlistSlice';
 import type { RootState } from '@/app/store';
 import { toast } from 'sonner';
-import { addToCart } from '@/app/cartSlice';
+import AddToCartButton from '../atoms/AddToCartButton';
+import { Badge } from '../atoms/badge';
+import { Button } from '../atoms/button';
+import { Card, CardContent, CardHeader } from '../atoms/card';
+import RatingStars from '../atoms/rating';
 
 const ProductCard = ({ product }: { product: Product }) => {
   const dispatch = useDispatch();
@@ -72,16 +72,7 @@ const ProductCard = ({ product }: { product: Product }) => {
             </div>
 
             <div className="mt-5">
-              <Button
-                className="text-xs bg-[#00bd32] cursor-pointer hover:scale-102 transition-transform duration-200"
-                onClick={(e) => {
-                  e.preventDefault();
-                  dispatch(addToCart({ ...product, quantity: 1 }));
-                  toast.success('Added to cart');
-                }}
-              >
-                Add to cart
-              </Button>
+              <AddToCartButton product={product} />
             </div>
           </CardContent>
         </Card>

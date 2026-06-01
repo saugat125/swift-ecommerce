@@ -1,14 +1,10 @@
 import type { Product } from '@/types/product';
+import AddToCartButton from '../atoms/AddToCartButton';
+import RatingStars from '@/components/atoms/rating';
 import { Badge } from '@/components/atoms/badge';
 import { Card } from '@/components/atoms/card';
-import RatingStars from '@/components/atoms/rating';
-import { Button } from '../atoms/button';
-import { useDispatch } from 'react-redux';
-import { addToCart } from '@/app/cartSlice';
-import { toast } from 'sonner';
 
 const ProductDetailsSection = ({ product }: { product: Product }) => {
-  const dispatch = useDispatch();
   return (
     <div className="max-w-5xl mx-auto px-4 py-10">
       <Card className="grid md:grid-cols-2 gap-10 p-6 border border-gray-200">
@@ -37,15 +33,7 @@ const ProductDetailsSection = ({ product }: { product: Product }) => {
           <p className="text-2xl md:text-3xl font-bold">${product?.price}</p>
 
           <div>
-            <Button
-              className="text-md bg-[#00bd32] cursor-pointer hover:scale-101 transition-transform duration-200"
-              onClick={() => {
-                dispatch(addToCart({ ...product, quantity: 1 }));
-                toast.success('Added to cart');
-              }}
-            >
-              Add to cart
-            </Button>
+            <AddToCartButton product={product} />
           </div>
         </div>
       </Card>

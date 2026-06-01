@@ -15,6 +15,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@/components/atoms/sheet';
+import AddToCartButton from '../atoms/AddToCartButton';
 
 const Wishlist = () => {
   const dispatch = useDispatch();
@@ -79,16 +80,7 @@ const Wishlist = () => {
 
                 <div className="flex items-center justify-between mt-3">
                   <span className="text-lg font-bold">${product.price}</span>
-                  <Button
-                    variant="ghost"
-                    className="text-sm font-semibold hover:bg-white cursor-pointer text-gray-800 hover:text-black transition duration-200"
-                    onClick={() => {
-                      dispatch(addToCart({ ...product, quantity: 1 }));
-                      toast.success('Added to cart');
-                    }}
-                  >
-                    Add to cart
-                  </Button>
+                  <AddToCartButton product={product} />
 
                   <button
                     onClick={() => {

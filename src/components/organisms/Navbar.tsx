@@ -4,7 +4,7 @@ import Cart from './Cart';
 
 const Navbar = () => {
   return (
-    <nav className="w-full min-h-12 py-4 px-6 sm:px-8 md:px-16 lg:px-20 border-b border-gray-300 shadow-sm bg-white mb-2 md:mb-6 lg:mb-10">
+    <nav className="sticky top-0 z-50 lg:static w-full min-h-12 py-4 px-6 sm:px-8 md:px-16 lg:px-20 border-b border-gray-300 shadow-sm bg-white mb-2 md:mb-6 lg:mb-10">
       <div className="flex justify-between items-center">
         <div>
           <Link to="/">

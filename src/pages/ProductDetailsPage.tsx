@@ -7,6 +7,7 @@ import {
 } from '@/services/productApi';
 import { useMemo } from 'react';
 import { useParams } from 'react-router-dom';
+import NotFound from '@/components/organisms/NotFound';
 
 const ProductDetailsPage = () => {
   const { productId } = useParams();
@@ -33,13 +34,11 @@ const ProductDetailsPage = () => {
       </div>
     );
   }
+
   if (!productId || isNaN(id)) {
-    return (
-      <div className="max-w-5xl mx-auto px-4 py-10 text-red-600">
-        Invalid product ID
-      </div>
-    );
+    return <NotFound />;
   }
+
   if (error) {
     return (
       <div className="text-red-600 ml-10 lg:ml-16">
@@ -48,11 +47,7 @@ const ProductDetailsPage = () => {
     );
   }
   if (!product) {
-    return (
-      <div className="max-w-5xl mx-auto px-4 py-10 text-red-600">
-        Product not found.
-      </div>
-    );
+    return <NotFound />;
   }
 
   return (
